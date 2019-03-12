@@ -589,7 +589,7 @@
           '200':
             description: Success
             schema:
-              $ref: '#/definitions/AgentMicroservicesInfoResponse'
+              $ref: '#/definitions/AgentMicroserviceInfoResponse'
             headers:
               X-Timestamp:
                 type: number
@@ -598,6 +598,56 @@
             description: Not Authorized
           '404':
             description: Invalid Microservice Uuid
+          '500':
+            description: Internal Server Error
+    '/agent/routes':
+      get:
+        tags:
+        - Agent
+        description: Gets microservice routes for ioFog node
+        operationId: getAgentMicroserviceRoutes
+        parameters:
+        - in: header
+          name: Authorization
+          description: Agent Token
+          required: true
+          type: string
+        responses:
+          '200':
+            description: Success
+            schema:
+              $ref: '#/definitions/AgentMicroserviceRoutesResponse'
+            headers:
+              X-Timestamp:
+                type: number
+                description: FogController server timestamp
+          '401':
+            description: Not Authorized
+          '500':
+            description: Internal Server Error
+    '/agent/connectors':
+      get:
+        tags:
+        - Agent
+        description: Gets ioFog Connectors
+        operationId: getAgentConnectors
+        parameters:
+        - in: header
+          name: Authorization
+          description: Agent Token
+          required: true
+          type: string
+        responses:
+          '200':
+            description: Success
+            schema:
+              $ref: '#/definitions/AgentConnectorsResponse'
+            headers:
+              X-Timestamp:
+                type: number
+                description: FogController server timestamp
+          '401':
+            description: Not Authorized
           '500':
             description: Internal Server Error
     '/agent/registries':
@@ -2761,7 +2811,7 @@
           type: array
           items:
             $ref: '#/definitions/AgentMicroservicesInfoResponse'
-    AgentMicroservicesInfoResponse:
+    AgentMicroserviceInfoResponse:
       type: object
       properties:
         uuid:
@@ -2792,6 +2842,109 @@
           type: boolean
         routes:
           $ref: '#/definitions/ReceiverMicroservices'
+    AgentConnectorsResponse:
+      type: object
+      properties:
+        connectors:
+          type: array
+          items:
+            $ref: '#/definitions/AgentConnectorInfoResponse'
+    AgentConnectorInfoResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+          example: LocalConnector
+        host:
+          type: string
+          example: localhost
+        port:
+          type: number
+          example: 5500
+        user:
+          type: string
+          example: agent
+        userPassword:
+          type: string
+          example: agent123
+        devMode:
+          type: boolean
+        cert:
+          type: string
+        keystorePassword:
+          type: string
+    AgentMicroserviceRoutesResponse:
+      type: object
+      properties:
+        routes:
+          type: array
+          items:
+            $ref: '#/definitions/AgentMicroserviceRouteInfoResponse'
+    AgentMicroserviceRouteInfoResponse:
+      type: object
+      properties:
+        microserviceUuid: 
+          type: string
+          example: PVhwD6hhYbf79vcHNBXRKJh8XHxR4BxT
+        isLocal:
+          type: boolean
+        config:
+          $ref: '#/definitions/AgentMicroserviceRouteConfigResponse'
+        receivers:
+          type: array
+          items:
+            $ref: '#/definitions/AgentMicroserviceRouteReceiverResponse'
+    AgentMicroserviceRouteReceiverResponse:
+      type: object
+      properties:
+        microserviceUuid: 
+          type: string
+          example: ZGZZbwxwG7KGdJYPpJBzRywnnCTKPB36
+        isLocal:
+          type: boolean
+        config: 
+          $ref: '#/definitions/AgentMicroserviceRouteConfigResponse'
+    AgentMicroserviceRouteConfigResponse:
+      type: object
+      properties:
+        connectorId: 
+          type: number
+        publisher:
+          type: string
+          example: PVhwD6hhYbf79vcHNBXRKJh8XHxR4BxT
+        passKey: 
+          type: string
+    AgentMicroservicesInfoResponse:
+      type: object
+      properties:
+        uuid:
+          type: string
+        needUpdate:
+          type: boolean
+        rebuild:
+          type: boolean
+        rootHostAccess:
+          type: boolean
+        logSize:
+          type: number
+        imageId:
+          type: string
+        registryUrl:
+          type: string
+        portMappings:
+          type: array
+          items:
+            $ref: '#/definitions/PortMappingAgentRequest'
+        VolumeMappings:
+          type: array
+          items:
+            $ref: '#/definitions/VolumeMapping'
+        imageSnapshot:
+          type: string
+        removeWithCleanUp:
+          type: boolean
     ReceiverMicroservices:
       type: array
       items:

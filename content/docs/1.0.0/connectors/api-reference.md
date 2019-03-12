@@ -8,125 +8,112 @@ ioFog Agent connects to Connectors and through connecting Connectors traffic is 
 
 **1) The first type, called a public pipe, provides a way to securely access Fog software and data from anywhere on in the world. Connector punches through firewalls and NATed networks to perform automatic internetworking of the Fog.**
 
-Let’s describe what mapping is. Mapping is a way for describing a port opening, no matter whether you create a public or private pipe. It is an object that has an internal and an external port.
-
-**The Endpoint and Response (below) of a public pipe connection is displayed below (Add functionality):**
+**The Endpoint to create a public pipe connection is displayed below:**
 
 **Request**
 
 ```json
-Endpoint: /api/v2/mapping/add
+Endpoint: /route
 Method: POST
-Header Content-Type: application/x-www-form-urlencoded
-Parameters: mapping={"type":"public","maxconnections":60,"heartbeatabsencethreshold":200000}
-```
-
-"maxconnections" means how many connection threads the ioFog agent will make with the Connector. You can have many users at the same time.
-
-"heartbeatabsencethreshold" means if we don’t have a heartbeat signal from the ioFog agent within 20 sec, we kill that connection thread.
-
-**Response:**
-
-```json
+Header Content-Type: application/json
+Body:
 {
-  "status": "ok",
-  "id": "2ae8ff72-7447-47de-a4ec-123eb214d63e",
-  "port1": 32768,
-  "port2": 32769,
-  "passcode1": "0b403b65-c5a0-476f-92f5-ffc7ca0f85ef",
-  "passcode2": "",
-  "timestamp": 1542719018626
+	"publisherId": "2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD",
+	"routeType": "public"
 }
-```
-
-“id” is your ID for the mapping
-
-"port1" - port that will be used by the ioFog agent
-
-"port2" - port that will be by the Connector for public URL access
-
-"passcode1” is used by the ioFog agent to establish a secure connection to the Connector. The Fog agent will receive the information through the Fog controller and tell you that you need to connect.
-
-**The Endpoint of public pipe connection is displayed below (Remove):**
-
-**Request**
-
-```json
-Endpoint: /api/v2/mapping/remove
-Method: POST
-Header Content-Type: application/x-www-form-urlencoded
-Parameters: mappingid=e2454159-ed8c-4d00-a885-fdd87de811de
 ```
 
 **Response:**
 
 ```json
 {
-  "status": "ok",
-  "id": "2ae8ff72-7447-47de-a4ec-123eb214d63e",
-  "timestamp": 1542719354334
+  "routeType": "PUBLIC",
+  "publisherId": "2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD",
+  "passKey": "d836053a-4430-4b16-996e-ba022f5aa560",
+  "privatePort": 12349,
+  "publicPort": 12350,
+  "maxConnections": 60
 }
 ```
+
+“routeType” - connectivity type created.
+
+“publisherId” - uuid of publishing microservice
+
+“passKey” is used by the ioFog agent to establish a secure connection to the Connector. The Fog agent will receive the information through the Fog controller and tell you that you need to connect.
+
+“privatePort” - port that will be used by the ioFog agent.
+
+“publicPort” - port that will be used by the Connector for public URL access.
+
+“maxConnections” means how many connection threads the ioFog agent will make with the Connector. You can have many users at the same time.
+
+**The Endpoint to remove public pipe connection is displayed below:**
+
+**Request**
+
+```json
+Endpoint: /route/public/2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD
+Method: DELETE
+```
+
+“2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD” - uuid of publishing microservice.
+
+The request responds with status code 204 if successful.
 
 **2) The second type, called a private pipe, consumes bandwidth on the Connector but stabilizes connectivity between Fog nodes that can’t normally see each other.**
 
 Connector is available for 2 different ioFog agents talking to each other.
 
-**The Endpoint and Response (below) of a private pipe connection is displayed below (Add functionality):**
+**The Endpoint to create private pipe connection is displayed below:**
 
 **Request**
 
 ```json
-Endpoint: /api/v2/mapping/add
+Endpoint: /route
 Method: POST
-Header Content-Type: application/x-www-form-urlencoded
-Parameters: {"type":"private","maxconnectionsport1":1, "maxconnectionsport2":1, "heartbeatabsencethresholdport1":200000, "heartbeatabsencethresholdport2":200000}
+Header Content-Type: application/json
+Body:
+{
+	"publisherId": "2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD",
+	"routeType": "private"
+}
 ```
 
 **Response:**
 
 ```json
 {
-  "status": "ok",
-  "id": "e2454159-ed8c-4d00-a885-fdd87de811de",
-  "port1": 32770,
-  "port2": 32771,
-  "passcode1": "3dbd413c-10e9-4e40-a9cb-f4b8fb2b8b56",
-  "passcode2": "7f4eb783-c2ab-4517-8aaf-c8395054193e",
-  "timestamp": 1542719231127
+  "routeType": "PRIVATE",
+  "publisherId": "2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD",
+  "passKey": "48715faa-00d0-4141-80ba-7e5542a29b3c"
 }
 ```
 
-The parameters description is the same as is described above for a public pipe.
+“routeType” - connectivity type created.
 
-Here “port1" will come out in "port2", and vice versa. Without the passcodes you will be immediately rejected.
+“publisherId” - uuid of publishing microservice
 
-**The Endpoint of private pipe connection is displayed below (Remove):**
+“passKey” is used by the ioFog agent to establish a secure connection to the Connector. The Fog agent will receive the information through the Fog controller and tell you that you need to connect.
+
+**The Endpoint to remove private pipe connection is displayed below:**
 
 **Request**
 
 ```json
-Endpoint: /api/v2/mapping/remove
-Method: POST
-Header Content-Type: application/x-www-form-urlencoded
-Parameters: mappingid=e2454159-ed8c-4d00-a885-fdd87de811de
+Endpoint: /route/private/2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD
+Method: DELETE
 ```
 
-**Response:**
+“2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD” - uuid of publishing microservice.
 
-```json
-{
-  "status": "ok",
-  "id": "2ae8ff72-7447-47de-a4ec-123eb214d63e",
-  "timestamp": 1542719354334
-}
-```
+The request responds with status code 204 if successful.
 
 ---
 
 **In Public mode the URL is generated as follows:**
 
-Example: ${protocol}://${address}\${port2}
+Example: ${protocol}://${address}\${publicPort}
 
 where
 
@@ -136,8 +123,8 @@ where
 
 ---
 
-In iofog-connector.config file
+In iofog-connector.properties file
 
-When "dev": true, it's http connection.
+When connector.isDevModeEnabled=true, it's http connection.
 
-When "dev": false, it's https connection.
+When connector.isDevModeEnabled=false, it's https connection.

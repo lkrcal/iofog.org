@@ -213,42 +213,52 @@ iofog-controller connector <action> <options>
 | ---------- | ----------------------------- |
 | **add**    | Add a new Connector.          |
 | **update** | Update an existing Connector. |
-| **remote** | Delete a Connector.           |
+| **remove** | Delete a Connector.           |
 | **list**   | List all Connectors.          |
 
 #### Options
 
 ##### add
 
-|                            |                                 |
-| -------------------------- | ------------------------------- |
-| **-n, --name string**      | Connector name                  |
-| **-d, --domain string**    | Connector domain name           |
-| **-i, --public-ip string** | Connector public IP address     |
-| **-c, --cert string**      | Certificate                     |
-| **-S, --self-signed-on**   | Switch on self-signed enabled   |
-| **-s, --self-signed-off**  | Switch off self-signed disabled |
-| **-H, --dev-mode-on**      | Switch on dev mode              |
-| **-h, --dev-mode-off**     | Switch off dev mode             |
+|                                    |                                 |
+| ---------------------------------- | ------------------------------- |
+| **-n, --name string**              | Connector name                  |
+| **-d, --domain string**            | Connector domain name           |
+| **-i, --public-ip string**         | Connector public IP address     |
+| **-c, --ca-cert string**           | Path to CA certificate          |
+| **-C, --server-cert string**       | Path to server certificate      |
+| **-S, --self-signed-on**           | Switch on self-signed enabled   |
+| **-s, --self-signed-off**          | Switch off self-signed disabled |
+| **-H, --dev-mode-on**              | Switch on dev mode              |
+| **-h, --dev-mode-off**             | Switch off dev mode             |
+| **-k, --keystore-password string** | Password for keystore access    |
+| **-p, --port number**              | Active MQ port                  |
+| **-u, --user string**              | Active MQ user                  |
+| **-P, --user-password string**     | Acrive MQ user password         |
 
 ##### update
 
-|                            |                                 |
-| -------------------------- | ------------------------------- |
-| **-n, --name string**      | Connector name                  |
-| **-d, --domain string**    | Connector domain name           |
-| **-i, --public-ip string** | Connector public IP address     |
-| **-c, --cert string**      | Certificate                     |
-| **-S, --self-signed-on**   | Switch on self-signed enabled   |
-| **-s, --self-signed-off**  | Switch off self-signed disabled |
-| **-H, --dev-mode-on**      | Switch on dev mode              |
-| **-h, --dev-mode-off**     | Switch off dev mode             |
+|                                    |                                 |
+| ---------------------------------- | ------------------------------- |
+| **-n, --name string**              | Connector name                  |
+| **-d, --domain string**            | Connector domain name           |
+| **-i, --public-ip string**         | Connector public IP address     |
+| **-c, --ca-cert string**           | Path to CA certificate          |
+| **-C, --server-cert string**       | Path to server certificate      |
+| **-S, --self-signed-on**           | Switch on self-signed enabled   |
+| **-s, --self-signed-off**          | Switch off self-signed disabled |
+| **-H, --dev-mode-on**              | Switch on dev mode              |
+| **-h, --dev-mode-off**             | Switch off dev mode             |
+| **-k, --keystore-password string** | Password for keystore access    |
+| **-p, --port number**              | Active MQ port                  |
+| **-u, --user string**              | Active MQ user                  |
+| **-P, --user-password string**     | Acrive MQ user password         |
 
 ##### remove
 
-|                            |                             |
-| -------------------------- | --------------------------- |
-| **-i, --public-ip string** | Connector public IP address |
+|                       |                |
+| --------------------- | -------------- |
+| **-n, --name string** | Connector name |
 
 ## Config Locations
 

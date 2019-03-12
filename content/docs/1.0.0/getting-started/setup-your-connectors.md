@@ -42,64 +42,68 @@ sudo yum install iofog-connector
 
 ## Add Configuration
 
-The Connector looks for a JSON configuration file that needs to be created at `/etc/iofog-connector/iofog-connector.conf`.
+The Connector has configuration file that is located at `/etc/iofog-connector/iofog-connector.properties`.
 
-This JSON configuration file has four required fields: `"ports"`, `"exclude"`, `"broker"`, and `"address"`.
+This configuration file has several configuration properties listed below:
 
-| Field       | Description                                                                                                                |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `"ports"`   | An array of allowed port ranges on the Connector's machine that it can use in ioFog Agent intercommunication.              |
-| `"exclude"` | An array of port ranges on the Connector's machine that you want excluded from the ranges provided in the `"ports"` field. |
-| `"broker"`  | TODO                                                                                                                       |
-| `"address"` | TODO                                                                                                                       |
+| Field                             | Description                                               |
+| --------------------------------- | --------------------------------------------------------- |
+| `"connector.isDevModeEnabled"`    | develop mode (should be false if ssl is used)             |
+| `"server.port"`                   | connector REST API port (8080 for HTTP and 443 for HTTPS) |
+| `"server.ssl.key-store-type"`     | keystore format                                           |
+| `"server.ssl.key-store"`          | keystore location                                         |
+| `"server.ssl.key-store-password"` | keystore password                                         |
+| `"server.ssl.key-alias"`          | key alias in the keystore                                 |
+| `"artemis.agent-user"`            | user to connect to ActiveMQ                               |
+| `"artemis.agent-password"`        | user password                                             |
+| `"artemis.agent-role"`            | user role                                                 |
+| `"artemis.address"`               | ActiveMQ address to send iofog messages to                |
+| `"artemis.host"`                  | ActiveMQ host                                             |
+| `"artemis.port"`                  | ActiveMQ port                                             |
 
 Here's an example:
 
-```sh
+```
 # This is only an example. Make sure to change
 # these values for your unique configuration.
 
-sudo echo '{
-  "ports": [
-    "6000-6001",
-    "7000-7002",
-    "30000-39999",
-    "40000-49999"
-  ],
-  "exclude": [
-    "7001"
-  ],
-  "broker": 12345,
-  "address": "127.0.0.1"
- }' > /etc/iofog-connector/iofog-connector.conf
+spring.application.name=iofog-connector
+
+connector.isDevModeEnabled=true
+
+########### ssl settings ###########
+# Comment out all ssl configs in order to switch to http
+
+#server.port=443
+#server.ssl.key-store-type=PKCS12
+#server.ssl.key-store=classpath:server-side-keystore.p12
+#server.ssl.key-store-password=secureexample
+#server.ssl.key-alias=iofog
+########### ssl settings ###########
+
+########### ActiveMQ settings ###########
+artemis.agent-user=agent
+artemis.agent-password=agent123
+artemis.agent-role=agent
+artemis.address=pubsub.iofog
+artemis.host=connector.iofog.org
+artemis.port=5500
+########### ActiveMQ settings ###########
 ```
 
 ## Dev Mode
 
 The Connector has a Dev Mode that allows you to get up and running more quickly without needing to deal with SSL certificates.
 
-<aside class="notifications tip">
-  <h3><img src="/images/icos/ico-tip.svg" alt=""> Dev Mode must be enabled on all Controllers, Connectors, and Agents</h3>
-  <p>When you enable Dev Mode on your Connector, make sure all of your Agents and Controllers are also in Dev Mode, otherwise they will not be able to communicate.</p>
-  <p>When you're ready for production, make sure you disable Dev Mode on all of them as well, and have valid SSL certificates installed.</p>
-</aside>
+When you're ready for production, make sure you disable Dev Mode on Agent, Controller and Connector, and have valid SSL certificates installed.
 
-To enable Dev Mode on the Connector you'll need to first edit your configuration file `/etc/iofog-connector/iofog-connector.conf`, adding the property `"dev": true`.
-
-##### Example /etc/iofog-connector/iofog-connector.conf
-
-```git
-{
-  // etc...
-  "address": "127.0.0.1",
-+ "dev": true
- }
-```
+To enable Dev Mode on the Connector you'll need to first edit your configuration file `/etc/iofog-connector/iofog-connector.properties`,
+changing the property connector.isDevModeEnabled to true (it defaults to true).
 
 If your Connector is already registered with your Controller, you'll need to update it to use Dev Mode as well:
 
 ```sh
-iofog-controller connector update --public-ip <connector_ip> --dev-mode-on
+iofog-controller connector update --name <connector_name> --dev-mode-on
 ```
 
 Otherwise, when you do register it with the Controller, make sure you include the `--dev-mode-on` flag.
@@ -108,27 +112,45 @@ With these enabled, the Connector will send and receive communications using `ht
 
 ## SSL Certificates
 
-When not running in developer mode, the Connector requires a valid SSL certificate and key.
+When not running in developer mode, the Connector requires keystore that contains a valid server and CA certificates.
 
 Ideally certificates would be signed by a Certificate Authority, but because that would require a public domain name, self-signed certificates are accepted as well.
 
-By convention the Connector expects your SSL certificate and key to be named `server-cert.per` and `server-key.per` respectively and placed in the `/etc/iofog-connector` directory.
+Here are properties in `/etc/iofog-connector/iofog-connector.properties` file required for ssl configuration:
+
+```
+connector.isDevModeEnabled=false
+server.port=443
+server.ssl.key-store-type=PKCS12
+server.ssl.key-store=classpath:server-side-keystore.p12
+server.ssl.key-store-password=secureexample
+server.ssl.key-alias=iofog
+
+```
 
 If you are using a self-signed certificate for your Connector, you'll need to make sure that you have enabled that feature from the Controller, wherever it is running:
 
 ```sh
 # NOTE: this is the *Controller* not your Connector!
 
-iofog-controller config connector add \
+iofog-controller connector add \
   --name "my-connector" \
   --domain "example.com" \
   --self-signed-on \
-  --cert "$(< path/to/ssl.cert)"
+  --dev-mode-off \
+  --ca-cert "$(< path/to/ca.cert) \
+  --server-cert "$(< path/to/server.cert) \
+  --keystore-password changeit \
+  --port 5500 \
+  --user agent \
+  --user-password agent123
 
 # If you are using Dev Mode, you need to also include --dev-mode-on
 ```
 
-The `--cert "$(< path/to/ssl.cert)"` argument is used to provide a copy of our self-signed certificate.
+The `--ca-cert "$(< path/to/ca.cert)"` argument is used to provide a copy of our self-signed ca certificate.
+
+The `--server-cert "$(< path/to/server.cert)"` argument is used to provide a copy of our self-signed server certificate.
 
 <aside class="notifications tip">
   <h3><img src="/images/icos/ico-tip.svg" alt=""> Use the same certificate for Controllers, Connectors, and Agents</h3>
@@ -149,15 +171,24 @@ If you need to stop or restart it, you can use `stop`
 sudo service iofog-connector stop
 ```
 
+Also you can check connector status with following:
+
+```sh
+sudo service iofog-connector status
+```
+
 ## Add To Your Controller
 
 The last step is to register your Connector with your Controlller. This will require providing a domain and and static IP address to reach your Connector as arguments to the Controller's `connector add` command:
 
 ```sh
 iofog-controller connector add \
-  --name <connector_name> \
-  --domain <connector_domain_name> \
-  --public-ip <connector_ip> \
+  --name "my-connector" \
+  --domain "example.com" \
+  --dev-mode-on \
+  --port 5500 \
+  --user agent \
+  --user-password agent123
 ```
 
 ## Conclusion
