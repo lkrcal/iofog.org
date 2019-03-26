@@ -40,7 +40,7 @@ curl -s https://packagecloud.io/install/repositories/iofog/iofog-connector/scrip
 sudo yum install iofog-connector
 ```
 
-## Add Configuration
+## Connector Configuration
 
 The Connector has configuration file that is located at `/etc/iofog-connector/iofog-connector.properties`.
 
@@ -143,7 +143,8 @@ iofog-controller connector add \
   --keystore-password changeit \
   --port 5500 \
   --user agent \
-  --user-password agent123
+  --user-password agent123 \
+  --token 01826c283d7e4ae4bd8055232fff2aaf2ff7ad5aaf1f4163ba701bf2806a200d
 
 # If you are using Dev Mode, you need to also include --dev-mode-on
 ```
@@ -156,6 +157,24 @@ The `--server-cert "$(< path/to/server.cert)"` argument is used to provide a cop
   <h3><img src="/images/icos/ico-tip.svg" alt=""> Use the same certificate for Controllers, Connectors, and Agents</h3>
   <p>If you use self-signed certificates your Controllers, Connectors, and Agents likely need to be configured to use the same certificate/key pair so their communication is trusted.</p>
 </aside>
+
+## Create authorization token
+
+Connector REST API requires token to be passed in Authorization header. Run following command to generate it:
+
+```sh
+sudo iofog-connector --add-token
+
+Authorization Token: 01826c283d7e4ae4bd8055232fff2aaf2ff7ad5aaf1f4163ba701bf2806a200d
+```
+
+## Delete authorization token
+
+```sh
+sudo iofog-connector --del-token
+
+Deleting Token: 01826c283d7e4ae4bd8055232fff2aaf2ff7ad5aaf1f4163ba701bf2806a200d
+```
 
 ## Start the Connector
 
@@ -179,7 +198,7 @@ sudo service iofog-connector status
 
 ## Add To Your Controller
 
-The last step is to register your Connector with your Controlller. This will require providing a domain and and static IP address to reach your Connector as arguments to the Controller's `connector add` command:
+The last step is to register your Connector with your Controller. This will require providing a domain and and static IP address to reach your Connector as arguments to the Controller's `connector add` command:
 
 ```sh
 iofog-controller connector add \
@@ -188,7 +207,8 @@ iofog-controller connector add \
   --dev-mode-on \
   --port 5500 \
   --user agent \
-  --user-password agent123
+  --user-password agent123 \
+  --token 01826c283d7e4ae4bd8055232fff2aaf2ff7ad5aaf1f4163ba701bf2806a200d
 ```
 
 ## Conclusion

@@ -6,11 +6,13 @@ service iofog-connector <command>
 
 ## Commands
 
-|                   |                                                        |
-| ----------------- | ------------------------------------------------------ |
-| [start](#start)   | Start connector service.                               |
-| [stop](#stop)     | Stop connector service.                                |
-| [status](#status) | Display current status information about the software. |
+|                        |                                                        |
+| ---------------------- | ------------------------------------------------------ |
+| [start](#start)        | Start connector service.                               |
+| [stop](#stop)          | Stop connector service.                                |
+| [status](#status)      | Display current status information about the software. |
+| [create token](#token) | Create token to access Connector REST API.             |
+| [delete token](#token) | Delete token.                                          |
 
 ---
 
@@ -42,6 +44,20 @@ Display current status information about the software.
 service iofog-connector status
 ```
 
+## token
+
+Create token to access Connector REST API
+
+```sh
+iofog-connector --add-token
+```
+
+Delete token
+
+```sh
+iofog-connector --del-token=01826c283d7e4ae4bd8055232fff2aaf2ff7ad5aaf1f4163ba701bf2806a200d
+```
+
 # Configuration
 
 Configuration is located in `/etc/iofog-connector/iofog-connector.properties`
@@ -69,20 +85,6 @@ artemis.address=pubsub.iofog
 artemis.host=connector.iofog.org
 artemis.port=5500
 ########### ActiveMQ settings ###########
-
-database.filename=connector-data
-
-########### Logging settings ###########
-logging.pattern.console=%d{dd-MM-yyyy HH:mm:ss} %magenta([%thread]) %highlight(%-5level) %logger.%M - %msg%n
-logging.level.org.springframework=INFO
-logging.level.org.apache=INFO
-logging.level.org.iofog.connector=DEBUG
-logging.pattern.file= "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-logging.file=/var/log/${spring.application.name}/${spring.application.name}.log
-logging.file.max-size=10MB
-logging.file.max-history=10
-spring.http.log-request-details=true
-########### Logging settings ###########
 ```
 
 ### main settings
