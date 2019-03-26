@@ -16,6 +16,7 @@ ioFog Agent connects to Connectors and through connecting Connectors traffic is 
 Endpoint: /route
 Method: POST
 Header Content-Type: application/json
+Header Authorization: <token>
 Body:
 {
 	"publisherId": "2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD",
@@ -55,6 +56,7 @@ Body:
 ```json
 Endpoint: /route/public/2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD
 Method: DELETE
+Header Authorization: <token>
 ```
 
 “2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD” - uuid of publishing microservice.
@@ -73,6 +75,7 @@ Connector is available for 2 different ioFog agents talking to each other.
 Endpoint: /route
 Method: POST
 Header Content-Type: application/json
+Header Authorization: <token>
 Body:
 {
 	"publisherId": "2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD",
@@ -103,6 +106,7 @@ Body:
 ```json
 Endpoint: /route/private/2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD
 Method: DELETE
+Header Authorization: <token>
 ```
 
 “2HKHh4xvxRydfQfTHqkXHBJ86Tq7RDhD” - uuid of publishing microservice.

@@ -235,6 +235,7 @@ iofog-controller connector <action> <options>
 | **-p, --port number**              | Active MQ port                  |
 | **-u, --user string**              | Active MQ user                  |
 | **-P, --user-password string**     | Acrive MQ user password         |
+| **-t, --token string**             | Token to access Connector API   |
 
 ##### update
 
@@ -253,6 +254,7 @@ iofog-controller connector <action> <options>
 | **-p, --port number**              | Active MQ port                  |
 | **-u, --user string**              | Active MQ user                  |
 | **-P, --user-password string**     | Acrive MQ user password         |
+| **-t, --token string**             | Token to access Connector API   |
 
 ##### remove
 
