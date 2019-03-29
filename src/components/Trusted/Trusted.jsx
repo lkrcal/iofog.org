@@ -4,7 +4,7 @@ import './Trusted.scss';
 
 import logoEdgeworx from '../../../static/images/logos/edgeworx.svg';
 import logoIoT from '../../../static/images/logos/iot.svg';
-import logoEclipse from '../../../static/images/logos/eclipse.svg';
+import logoEclipse from '../../../static/images/logos/eclipse_foundation_logo.svg';
 
 class Trusted extends Component {
   render() {
@@ -25,7 +25,7 @@ class Trusted extends Component {
                 </a>
               </div>
               <div className="trusted__item">
-                <a href="https://projects.eclipse.org/proposals/iofog">
+                <a href="https://projects.eclipse.org/projects/iot.iofog">
                   <img
                     height="40"
                     srcSet={logoEclipse}

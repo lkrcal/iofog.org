@@ -13,7 +13,7 @@ module.exports = {
   dateFormat: 'DD/MM/YYYY', // Date format for display.
   // Links to social profiles/projects you want to display in the author segment/navigation bar.
   userLinks: {
-    github: 'https://github.com/ioFog',
+    github: 'https://github.com/eclipse-iofog',
     twitter: 'https://twitter.com/EdgeworxIO',
     slack:
       'https://join.slack.com/t/iofog/shared_invite/enQtNTQxMDczNjE0Mjc5LWViMThlYTkxYzBhYzYzN2IxZDZjMGYyYjA0OTM2NDZlZTI0ZTUwOTdlYzllYWRlNDgwY2ExZjY3YWVhODM0MzU'

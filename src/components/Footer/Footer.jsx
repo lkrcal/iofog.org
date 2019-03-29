@@ -5,7 +5,7 @@ import './Footer.scss';
 import config from '../../../data/SiteConfig';
 
 import logoEdgeworx from '../../../static/images/logos/edgeworx.svg';
-import logoEclipse from '../../../static/images/logos/eclipse.svg';
+import logoEclipse from '../../../static/images/logos/eclipse_foundation_logo.svg';
 import siteLogo from '../../../static/images/logos/iofog.svg';
 
 class Footer extends Component {
@@ -47,7 +47,7 @@ class Footer extends Component {
                     </a>
                   </div>
                   <div className="item">
-                    <a href="https://projects.eclipse.org/proposals/iofog">
+                    <a href="https://projects.eclipse.org/projects/iot.iofog">
                       <img srcSet={logoEclipse} alt="Eclipse Foundation" />
                     </a>
                   </div>
