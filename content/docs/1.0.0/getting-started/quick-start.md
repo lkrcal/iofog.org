@@ -59,7 +59,7 @@ Finally we need to download the ioFog Quick Start project, which will use Docker
 
 ```sh
 cd where/you/want/quick-start-project
-curl -L -o quick-start.tar.gz https://github.com/ioFog/demo/archive/blank-environment.tar.gz
+curl -L -o quick-start.tar.gz https://github.com/eclipse-iofog/demo/archive/blank-environment.tar.gz
 tar -zxvf quick-start.tar.gz --strip-components=1
 ```
 
@@ -81,13 +81,13 @@ Finally we need to download the ioFog Quick Start project, which will use Docker
 
 ```sh
 cd where/you/want/quick-start-project
-curl -L -o quick-start.tar.gz https://github.com/ioFog/demo/archive/blank-environment.tar.gz
+curl -L -o quick-start.tar.gz https://github.com/eclipse-iofog/demo/archive/blank-environment.tar.gz
 tar -zxvf quick-start.tar.gz --strip-components=1
 ```
 
 or alternatively you can manually download it:
 
-[Download Tutorial project](https://github.com/ioFog/demo/archive/blank-environment.zip)
+[Download Tutorial project](https://github.com/eclipse-iofog/demo/archive/blank-environment.zip)
 
 [Once you're done, you can skip straight to the next section](#bootstrap-the-project)
 
@@ -110,7 +110,7 @@ Docker for Windows can be installed from the Docker Store:
 
 Finally we need to download the ioFog Quick Start project, which will use Docker to run Linux containers for an ioFog [Agent](../agents/overview.html), [Controller](../controllers/overview.html), and [Connector](../connectors/overview.html) that are already setup for you.
 
-[Download Quick Start project](https://github.com/ioFog/demo/archive/blank-environment.zip)
+[Download Quick Start project](https://github.com/eclipse-iofog/demo/archive/blank-environment.zip)
 
 You'll then need to unzip the contents into your preferred working directory.
 

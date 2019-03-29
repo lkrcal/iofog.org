@@ -56,7 +56,7 @@ npm install --save @iofog/nodejs-sdk
 
 ## SDK Basics
 
-The [ioFog Node.js SDK](https://github.com/ioFog/iofog-nodejs-sdk) has a number of APIs, but in this tutorial we're most interested in these:
+The [ioFog Node.js SDK](https://github.com/eclipse-iofog/iofog-nodejs-sdk) has a number of APIs, but in this tutorial we're most interested in these:
 
 - [`iofog.init()`](#iofoginit)
 - [`iofog.getConfig()`](#iofoggetconfig)

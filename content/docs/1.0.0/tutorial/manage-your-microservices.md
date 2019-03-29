@@ -29,13 +29,13 @@ This returns a JSON object containing the full list, along with their configurat
 
 A microservice that pretends to be reading data from a local hardware sensor. The data it produces is published with [the SDK](../writing-microservices/sdk.html) and routed through the [Connector](../connectors/overview.html) so that it can be read by other microservices.
 
-[Source Code](https://github.com/ioFog/example-microservices/tree/master/sensors-data)
+[Source Code](https://github.com/eclipse-iofog/example-microservices/tree/master/sensors-data)
 
 ###### API
 
 A generic microservice that provides a REST API web server, allowing access to any arbitrary data source connected using the Controller.
 
-[Source Code](https://github.com/ioFog/example-microservices/tree/master/json-rest-api-cors-enabled)
+[Source Code](https://github.com/eclipse-iofog/example-microservices/tree/master/json-rest-api-cors-enabled)
 
 ###### Freeboard
 

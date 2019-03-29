@@ -10,10 +10,10 @@ Before opening an issue, please search the issue tracker to make sure your issue
 
 We use different issue trackers for individual pieces of the ioFog community.
 
-- [Agent](https://github.com/ioFog/Agent/issues)
-- [Controller](https://github.com/ioFog/Controller/issues)
-- [Connector](https://github.com/ioFog/Connector/issues)
-- [iofog.org documentation](https://github.com/ioFog/iofog.org/issues) (this site)
+- [Agent](https://github.com/eclipse-iofog/Agent/issues)
+- [Controller](https://github.com/eclipse-iofog/Controller/issues)
+- [Connector](https://github.com/eclipse-iofog/Connector/issues)
+- [iofog.org documentation](https://github.com/eclipse-iofog/iofog.org/issues) (this site)
 
 ### Getting Help
 
@@ -41,7 +41,7 @@ Thank you for contributing!
 
 ### Docs
 
-You can find the source code for iofog.org (this site) here: <https://github.com/ioFog/iofog.org>
+You can find the source code for iofog.org (this site) here: <https://github.com/eclipse-iofog/iofog.org>
 
 Improvements to the documentation are always welcome. Currently it is powered by Gatsby, which is a static site builder that uses React.
 
